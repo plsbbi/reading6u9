@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ms Lê Hằng English - IELTS Reading Interactive Mock Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8854C0;
+            --primary-light: #FFD2E5;
+            --secondary: #FDCB6E;
+            --accent: #00C9A7;
+            --bg-correct: #00D26A;
+            --bg-wrong: #FF4757;
+            --text-dark: #2D3436;
+            --panel-left-bg: #FFF9FB;
+            --panel-right-bg: #FAEDF0;
+            --border-radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #FFD2E5, #FFF0F5, #E8D7F1, #FFEAA7);
+            background-size: 400% 400%;
+            animation: gradientEffect 15s ease infinite;
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientEffect {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%238854C0' fill-opacity='0.15'%3E%3Cpath d='M15 15 L20 10 L25 15 L20 20 Z'/%3E%3Ccircle cx='55' cy='25' r='5'/%3E%3Cpath d='M50 55 L55 50 L60 55 L55 60 Z'/%3E%3Ccircle cx='25' cy='55' r='4'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 10px 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            border-bottom: 4px solid var(--primary-light);
+        }
+
+        .header-brand h2 {
+            font-size: 11px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 900;
+        }
+
+        .header-brand h1 {
+            font-size: 18px;
+            color: var(--text-dark);
+            font-weight: 900;
+        }
+
+        .timer-panel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .timer-box {
+            background: #FFE3EE;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 18px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 0 var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-timer {
+            background: var(--secondary);
+            border: 2px solid var(--text-dark);
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 4px 0 var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .btn-timer:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--text-dark);
+        }
+
+        .global-progress {
+            height: 10px;
+            background: #EAEAEA;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+        }
+
+        .global-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--bg-correct));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .exercise-navigation-bar {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 25px;
+            gap: 12px;
+            overflow-x: auto;
+            z-index: 4;
+            border-bottom: 2px solid #EAEAEA;
+        }
+
+        .nav-icon-btn {
+            background: #FFF;
+            border: 2px solid var(--text-dark);
+            padding: 10px 18px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 900;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 0 var(--text-dark);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .nav-icon-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 var(--text-dark);
+            background: var(--primary-light);
+        }
+
+        .nav-icon-btn.active {
+            background: var(--primary);
+            color: #FFF;
+            border-color: var(--primary);
+            box-shadow: 0 4px 0 #4A148C;
+            transform: translateY(2px);
+        }
+
+        .workspace {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .exercise-view-block {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .exercise-view-block.active {
+            display: flex;
+        }
+
+        .split-left, .split-right {
+            flex: 1;
+            height: 100%;
+            overflow-y: auto;
+            padding: 30px;
+            scroll-behavior: smooth;
+        }
+
+        .split-left {
+            background: var(--panel-left-bg);
+            border-right: 4px dashed #FFD2E5;
+        }
+
+        .split-right {
+            background: var(--panel-right-bg);
+        }
+
+        .passage-header {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 900;
+            border-bottom: 5px solid var(--secondary);
+            padding-bottom: 8px;
+        }
+
+        .section-box {
+            background: #FFF;
+            padding: 22px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.02);
+            border-left: 6px solid var(--primary);
+        }
+
+        .section-box h3 {
+            margin-bottom: 14px;
+            color: #4A148C;
+            font-weight: 900;
+            font-size: 17px;
+        }
+
+        .paragraph-text {
+            line-height: 1.8;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .highlight-pastel {
+            background-color: #FFD2E5 !important;
+            border-radius: 4px;
+            padding: 1px 2px;
+        }
+
+        .btn-translate-toggle {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border: 2px solid #A5D6A7;
+            padding: 6px 16px;
+            border-radius: 14px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            box-shadow: 0 3px 0 #A5D6A7;
+        }
+
+        .vietnamese-translation {
+            display: none;
+            margin-top: 15px;
+            padding: 16px;
+            background: #FFFDE7;
+            border-left: 4px solid #FBC02D;
+            border-radius: 12px;
+            font-style: italic;
+            color: #5D4037;
+            font-size: 15.5px;
+            line-height: 1.75;
+        }
+
+        .glossary-card {
+            margin-top: 35px;
+            background: #FFF;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 6px 0 var(--primary-light);
+        }
+
+        .glossary-header {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glossary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .glossary-table th, .glossary-table td {
+            border: 1px solid #EAEAEA;
+            padding: 12px;
+        }
+
+        .glossary-table th {
+            background: var(--primary-light);
+            color: #4A148C;
+            font-weight: 900;
+        }
+
+        .exercise-card {
+            background: #FFF;
+            border: 3px solid var(--text-dark);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 0 var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .badge-number {
+            background: var(--primary);
+            color: #FFF;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 13px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .option-node {
+            background: #FFF;
+            border: 2px solid #E0E0E0;
+            padding: 14px 18px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 0 #E0E0E0;
+            transition: all 0.2s;
+        }
+
+        .option-node:hover {
+            transform: scale(1.015);
+            border-color: var(--primary);
+        }
+
+        .option-node.correct {
+            background-color: #E8F5E9 !important;
+            border-color: var(--bg-correct) !important;
+            box-shadow: 0 4px 0 var(--bg-correct) !important;
+            color: #1B5E20;
+        }
+
+        .option-node.incorrect {
+            background-color: #FFEBEE !important;
+            border-color: var(--bg-wrong) !important;
+            box-shadow: 0 4px 0 var(--bg-wrong) !important;
+            color: #B71C1C;
+        }
+
+        .gamified-dropdown {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--text-dark);
+            border-radius: 16px;
+            background: #FFF;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--text-dark);
+            appearance: none;
+            outline: none;
+            margin-top: 12px;
+        }
+
+        .blank-input-box {
+            border: 2px dashed var(--primary);
+            border-radius: 10px;
+            padding: 6px 12px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 220px;
+            text-align: center;
+            outline: none;
+            background: #FFFDE7;
+        }
+
+        .btn-blank-check {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--text-dark);
+            padding: 6px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 3px 0 var(--text-dark);
+            margin-left: 10px;
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            background: #FFFEE4;
+            border-radius: 14px;
+            border: 2px solid #FBC02D;
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        .explanation-panel p {
+            margin-bottom: 8px;
+        }
+
+        .btn-locate-evidence {
+            background: #E1F5FE;
+            color: #0288D1;
+            border: 1px solid #B3E5FC;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .sticky-footer {
+            position: fixed;
+            bottom: 25px;
+            right: 45px;
+            z-index: 100;
+        }
+
+        .btn-global-submit {
+            background: #FF4757;
+            color: white;
+            font-size: 22px;
+            font-weight: 900;
+            padding: 16px 45px;
+            border-radius: 35px;
+            border: 4px solid #000;
+            box-shadow: 0 8px 0 #000;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .shake-animation {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        #dashboard-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-body {
+            background: white;
+            border: 5px solid var(--text-dark);
+            border-radius: 35px;
+            padding: 45px;
+            max-width: 550px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 16px 0 var(--text-dark);
+        }
+
+        .score-badge {
+            width: 140px;
+            height: 140px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 25px auto;
+            font-size: 36px;
+            font-weight: 900;
+            border: 4px solid var(--text-dark);
+        }
+
+        .btn-close-dashboard {
+            background: var(--accent);
+            color: white;
+            border: 3px solid var(--text-dark);
+            padding: 12px 30px;
+            border-radius: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 4px 0 var(--text-dark);
+        }
+
+        canvas#confetti-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-layer"></canvas>
+
+    <header>
+        <div class="header-brand">
+            <h2>Ms Lê Hằng English</h2>
+            <h1>IELTS READING MOCK TEST</h1>
+        </div>
+        <div class="timer-panel">
+            <div class="timer-box">
+                ⏱️ <span id="clock-view">25:00</span>
+            </div>
+            <button class="btn-timer" id="timer-toggle-btn" onclick="triggerClockSystem()">BẮT ĐẦU TÍNH GIỜ LÀM BÀI</button>
+        </div>
+    </header>
+
+    <div class="global-progress">
+        <div class="global-progress-bar" id="master-progress-fill"></div>
+    </div>
+
+    <div class="exercise-navigation-bar" id="top-nav-bar">
+        <button class="nav-icon-btn active" onclick="activateSection(1)">🎪 Ex 2 - Festivals</button>
+        <button class="nav-icon-btn" onclick="activateSection(2)">⏳ Ex 2 - Journey Time</button>
+        <button class="nav-icon-btn" onclick="activateSection(3)">🗓️ Ex 2 - Evolution Event</button>
+        <button class="nav-icon-btn" onclick="activateSection(4)">🛕 Ex 3 - Ancestors</button>
+        <button class="nav-icon-btn" onclick="activateSection(5)">🛍️ Ex 3 - Shopping Shift</button>
+        <button class="nav-icon-btn" onclick="activateSection(6)">🏍️ Ex 3 - Roads & Bikes</button>
+        <button class="nav-icon-btn" onclick="activateSection(7)">👑 Ex 4 - Motorbike Kings</button>
+        <button class="nav-icon-btn" onclick="activateSection(8)">🌾 Ex 4 - Iowa Frontier</button>
+        <button class="nav-icon-btn" onclick="activateSection(9)">🧺 Ex 4 - Shoulder Pole</button>
+        <button class="nav-icon-btn" onclick="activateSection(10)">🌐 Ex 5 - Online Commerce</button>
+        <button class="nav-icon-btn" onclick="activateSection(11)">🎬 Ex 5 - Entertainment</button>
+    </div>
+
+    <div class="workspace">
+        
+        <div id="section-zone-1" class="exercise-view-block active">
+            <div class="split-left">
+                <h2 class="passage-header">🎪 Discover the Magic of Vietnamese Festivals!</h2>
+                <div class="section-box" id="ex21-passage-box">
+                    <h3>Reading Advertisement</h3>
+                    <p class="paragraph-text">Have you ever experienced (1) ______ traditional festival in Vietnam? Share your (2) ______ and let us know how it compares to other celebrations you've attended. Whether it was a vibrant cultural (3) ______ or delicious local food, we want to hear your story!<br><br>Join us at [VietnamFestivals.com] to connect (4) ______ fellow enthusiasts and celebrate the rich heritage of Vietnam together!</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex21-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex21-trans">Bạn đã bao giờ trải nghiệm một lễ hội truyền thống ở Việt Nam chưa? Hãy chia sẻ những kỷ niệm của bạn và cho chúng tôi biết nó so với các lễ hội khác mà bạn từng tham dự như thế nào. Cho dù đó là một buổi biểu diễn văn hóa sôi động hay món ăn địa phương ngon miệng, chúng tôi muốn nghe câu chuyện của bạn! Hãy tham gia với chúng tôi tại [VietnamFestivals.com] để kết nối với những người cùng đam mê và cùng nhau tôn vinh di sản phong phú của Việt Nam!</div>
+                </div>
+
+                <div class="glossary-card">
+                    <div class="glossary-header">📚 Glossary - Từ vựng Học thuật (B2-C2)</div>
+                    <table class="glossary-table">
+                        <thead><tr><th>Từ vựng</th><th>Loại từ</th><th>Nghĩa & Từ đồng nghĩa tương đương</th></tr></thead>
+                        <tbody>
+                            <tr><td>Vibrant</td><td>adj</td><td>Sôi động, tràn đầy sức sống (= Lively, energetic)</td></tr>
+                            <tr><td>Enthusiasts</td><td>n</td><td>Những người đam mê cuồng nhiệt (= Lovers, fans)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q21_1-card">
+                    <span class="badge-number">Câu hỏi 1</span>
+                    <p class="paragraph-text">Chọn từ thích hợp điền vào chỗ trống (1):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q21_1', 'A', this)">A. a</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q21_1', 'B', this)">B. the</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q21_1', 'C', this)">C. an</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q21_1', 'D', this)">D. no article</div>
+                    </div>
+                    <div class="explanation-panel" id="q21_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...experienced (1) ______ traditional festival in Vietnam?"</p>
+                        <p><strong>3. DỊCH NGHĨA:</strong> "...trải nghiệm một lễ hội truyền thống ở Việt Nam?"</p>
+                        <p><strong>4. CỤM TỪ ĐỒNG NGHĨA / NGỮ PHÁP:</strong> Danh từ đếm được số ít "traditional festival" nhắc đến lần đầu tiên mang tính chất khái quát nên ta dùng mạo từ "a".</p>
+                        <button class="btn-locate-evidence" onclick="locatePassageElement('ex21-passage-box')">📍 Vị trí dẫn chứng</button>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q21_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">Chọn từ thích hợp điền vào chỗ trống (2):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q21_2', 'B', this)">A. hi-tech appliances</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q21_2', 'B', this)">B. memories</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q21_2', 'C', this)">C. transportations</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q21_2', 'D', this)">D. generations</div>
+                    </div>
+                    <div class="explanation-panel" id="q21_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> "memories" nghĩa là kỷ niệm. Ngữ cảnh yêu cầu người tham gia chia sẻ lại những ký ức, trải nghiệm khi đi lễ hội của họ.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q21_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">Chọn từ thích hợp điền vào chỗ trống (3):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q21_3', 'D', this)">A. performative</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q21_3', 'B', this)">B. perform</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q21_3', 'C', this)">C. performer</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q21_3', 'D', this)">D. performance</div>
+                    </div>
+                    <div class="explanation-panel" id="q21_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> Đứng sau cụm tính từ "vibrant cultural" ta cần điền một danh từ chỉ hoạt động, sự vật. "performance" (buổi biểu diễn) là danh từ hoàn toàn phù hợp.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q21_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">Chọn từ thích hợp điền vào chỗ trống (4):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q21_4', 'A', this)">A. with</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q21_4', 'B', this)">B. for</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q21_4', 'C', this)">C. to</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q21_4', 'D', this)">D. at</div>
+                    </div>
+                    <div class="explanation-panel" id="q21_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Cấu trúc giới từ đi liền cố định với động từ: "connect with someone" (kết nối với ai đó).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-2" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">⏳ Discover Vietnam: A Journey Through Time</h2>
+                <div class="section-box" id="ex22-passage-box">
+                    <h3>Reading Announcement</h3>
+                    <p class="paragraph-text"><strong>1. Life in the Past:</strong><br>Step back in time to a Vietnam where villages flourished with rice fields and livestock. Families lived (1) ______ harmony, celebrating a vibrant (2) ______ heritage through customs and festivals. Life was simple, peaceful, and community-centered.<br><br><strong>2. Life Today:</strong><br>Fast forward to the present, where cities like (3) ______ Ho Chi Minh City and Hanoi buzz with energy. Modern technology intertwines with traditional (4) ______, creating a unique blend of old and new. Experience the rapid progress and dynamic lifestyle of contemporary Vietnam.<br><br>Explore Vietnam: Where History Meets Innovation</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex22-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex22-trans">1. Cuộc sống trong quá khứ: Quay ngược thời gian trở về Việt Nam nơi các làng quê trù phú trào dâng đồng lúa và gia súc. Gia đình sống hòa hợp, tôn vinh di sản văn hóa. 2. Cuộc sống ngày nay: Tiến nhanh tới hiện tại, các thành phố lớn như TP.HCM và Hà Nội náo nhiệt đầy năng lượng. Công nghệ đan xen với giá trị truyền thống.</div>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q22_1-card">
+                    <span class="badge-number">Câu hỏi 1</span>
+                    <p class="paragraph-text">Chỗ trống (1):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q22_1', 'C', this)">A. to</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q22_1', 'C', this)">B. at</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q22_1', 'C', this)">C. in</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q22_1', 'C', this)">D. for</div>
+                    </div>
+                    <div class="explanation-panel" id="q22_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Cụm colocation cố định: "live in harmony" (sống hòa thuận, hòa hợp).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q22_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">Chỗ trống (2):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q22_2', 'A', this)">A. cultural</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q22_2', 'A', this)">B. culture</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q22_2', 'A', this)">C. multiculturalism</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q22_2', 'A', this)">D. culturally</div>
+                    </div>
+                    <div class="explanation-panel" id="q22_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Đứng trước danh từ "heritage" ta cần điền một tính từ bổ nghĩa. Cụm từ "cultural heritage" nghĩa là di sản văn hóa.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q22_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">Chỗ trống (3):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q22_3', 'B', this)">A. a</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q22_3', 'B', this)">B. no article</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q22_3', 'B', this)">C. the</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q22_3', 'B', this)">D. an</div>
+                    </div>
+                    <div class="explanation-panel" id="q22_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Không sử dụng mạo từ trước tên riêng của các thành phố hoặc bang quốc gia (Ho Chi Minh City, Hanoi).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q22_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">Chỗ trống (4):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q22_4', 'C', this)">A. educations</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q22_4', 'C', this)">B. family types</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q22_4', 'C', this)">C. values</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q22_4', 'C', this)">D. differences</div>
+                    </div>
+                    <div class="explanation-panel" id="q22_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "traditional values" nghĩa là các giá trị truyền thống cốt lõi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-3" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🗓️ Discover the evolution of Vietnam!</h2>
+                <div class="section-box" id="ex23-passage-box">
+                    <h3>Topic Information</h3>
+                    <p class="paragraph-text">Topic: Vietnam's Journey Through Time<br>Date: September 20, 2024<br>Time: 2:00 PM - 4:00 PM<br>Location: Heritage Cultural Center, 456 Heritage Road, Hanoi<br><br>Join us at the Heritage Cultural Center in Hanoi (1) ______ September 20 for an exploration of Vietnam's rich history and vibrant present. We will delve into traditional customs and modern lifestyles.<br><br>Engage with special speakers (2) ______ will share their unique perspectives on these changes. Don’t miss this (3) ______ to learn more about Vietnam’s fascinating culture!<br><br>Register now at [EventRegistration.com] to secure (4) ______ your spot!</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex23-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex23-trans">Hãy tham gia cùng chúng tôi tại Trung tâm Văn hóa Di sản vào ngày 20 tháng 9... Gặp gỡ các diễn giả đặc biệt, những người sẽ chia sẻ góc nhìn độc đáo của mình. Đừng bỏ lỡ cơ hội này! Đăng ký ngay để giữ chỗ!</div>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q23_1-card">
+                    <span class="badge-number">Câu hỏi 1</span>
+                    <p class="paragraph-text">Chỗ trống (1):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q23_1', 'A', this)">A. on</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q23_1', 'A', this)">B. for</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q23_1', 'A', this)">C. with</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q23_1', 'A', this)">D. to</div>
+                    </div>
+                    <div class="explanation-panel" id="q23_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Đứng trước một ngày cụ thể có cả ngày lẫn tháng (September 20) ta phải dùng giới từ "on".</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q23_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">Chỗ trống (2):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q23_2', 'B', this)">A. where</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q23_2', 'B', this)">B. who</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q23_2', 'B', this)">C. which</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q23_2', 'B', this)">D. whom</div>
+                    </div>
+                    <div class="explanation-panel" id="q23_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Đại từ quan hệ "who" đóng vai trò làm chủ ngữ thay thế cho danh từ chỉ người "special speakers".</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q23_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">Chỗ trống (3):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q23_3', 'A', this)">A. opportunity</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q23_3', 'A', this)">B. generation</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q23_3', 'A', this)">C. living condition</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q23_3', 'A', this)">D. lifestyle</div>
+                    </div>
+                    <div class="explanation-panel" id="q23_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Cụm diễn đạt phổ biến: "Don't miss this opportunity" (Đừng bỏ lỡ cơ hội này).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q23_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">Chỗ trống (4):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q23_4', 'D', this)">A. the</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q23_4', 'D', this)">B. a</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q23_4', 'D', this)">C. an</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q23_4', 'D', this)">D. no article</div>
+                    </div>
+                    <div class="explanation-panel" id="q23_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Phía sau có tính từ sở hữu "your spot" nên ta không cần thêm mạo từ vào trước đó nữa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-4" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🛕 Respect for ancestors</h2>
+                <div class="section-box" id="ex31-passage-box">
+                    <h3>Reading Passage</h3>
+                    <p class="paragraph-text">Respect for ancestors is a vital element of Vietnamese culture. In the past, families lived in (1) _____________ households, with grandparents, parents, and children all sharing a (2) _____________. Ancestral altars were a prominent feature in every home, adorned with fresh flowers, incense, and offerings of food and drink. Special ceremonies were held throughout the year to honor (3) _____________ relatives. During Tet, the Vietnamese New Year, elaborate feasts were prepared to (4) _____________ ancestral spirits back to the home. Families would gather around the altar, sharing stories and expressing gratitude for the blessings bestowed upon them. This deep respect for the past ensured a strong sense of family identity and continuity, with traditions passed (5) _____________ from generation to generation.</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex31-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex31-trans">Tôn kính tổ tiên là cấu thành cốt lõi của văn hóa Việt Nam. Ngày xưa, các gia đình sống trong những đại gia đình nhiều thế hệ, với ông bà, cha mẹ, con cái cùng chia sẻ mái nhà. Bàn thờ gia tiên trang hoàng hoa tươi hương khói để tưởng nhớ những người đã khuất.</div>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q31_1-card">
+                    <span class="badge-number">Câu hỏi 1</span>
+                    <p class="paragraph-text">Vị trí (1):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q31_1', 'A', this)">A. extended</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q31_1', 'A', this)">B. nuclear</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q31_1', 'A', this)">C. communal</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q31_1', 'A', this)">D. common</div>
+                    </div>
+                    <div class="explanation-panel" id="q31_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> "extended households" là đại gia đình nhiều thế hệ (gồm cả ông bà, bố mẹ và con cháu chung sống).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q31_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">Vị trí (2):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q31_2', 'B', this)">A. door</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q31_2', 'B', this)">B. roof</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q31_2', 'B', this)">C. attic</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q31_2', 'B', this)">D. room</div>
+                    </div>
+                    <div class="explanation-panel" id="q31_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> Thành ngữ tiếng Anh: "sharing a roof" có nghĩa là cùng chung sống dưới một mái nhà.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q31_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">Vị trí (3):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q31_3', 'C', this)">A. current</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q31_3', 'C', this)">B. existing</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q31_3', 'C', this)">C. deceased</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q31_3', 'C', this)">D. present</div>
+                    </div>
+                    <div class="explanation-panel" id="q31_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> "deceased relatives" có nghĩa là những người thân, họ hàng đã qua đời/đã khuất.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q31_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">Vị trí (4):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q31_4', 'C', this)">A. deny</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q31_4', 'C', this)">B. refuse</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q31_4', 'C', this)">C. welcome</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q31_4', 'C', this)">D. reject</div>
+                    </div>
+                    <div class="explanation-panel" id="q31_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "welcome ancestral spirits back" có nghĩa là chào đón linh hồn của tổ tiên trở về chung vui cùng gia đình.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q31_5-card">
+                    <span class="badge-number">Câu hỏi 5</span>
+                    <p class="paragraph-text">Vị trí (5):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q31_5', 'D', this)">A. up</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q31_5', 'D', this)">B. on</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q31_5', 'D', this)">C. off</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q31_5', 'D', this)">D. down</div>
+                    </div>
+                    <div class="explanation-panel" id="q31_5-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> Cụm động từ cố định: "passed down" mang ý nghĩa là được lưu truyền từ đời này sang đời khác.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-5" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🛍️ How shopping has changed</h2>
+                <div class="section-box" id="ex32-passage-box">
+                    <h3>Reading Passage</h3>
+                    <p class="paragraph-text"><strong>1. Shoppers know as much as salespeople</strong><br>Then: People came into stores with little or (1) ____________ knowledge of the products and they relied on a salesperson to advise them on what to buy.<br>Now: (2) ____________ usually do their own research before shopping to get the maximum value out of every dollar they spend, and to feel secure about the items they’re buying. Therefore, shoppers nowadays have more power to (3) ____________ what they want to buy. If salespeople try to give false information about products, they risk losing potential customers.<br><br><strong>2. Opinions carry more weight than ever</strong><br>Then: Information about products were mostly shared among friends and family - and word of mouth was a (4) ____________ force that transformed a new product into a must-have.<br>Now: With YouTube and social networks, people are now sharing their opinions on products not just with a group of friends, but with (5) ____________ of people. Their reviews make it easy for people to discuss and get to know more about a product. They also affect people’s decisions on whether to buy a product.</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex32-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex32-trans">Trước đây khách hàng có rất ít hoặc không có kiến thức về mặt hàng, phải phụ thuộc nhân viên tư vấn. Ngày nay người mua hàng tự nghiên cứu sản phẩm trước để tối ưu hóa từng đồng tiền họ chi ra. Do đó họ nắm quyền chủ động quyết định mua sắm lớn hơn.</div>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card">
+                    <span class="badge-number">Câu hỏi 1 (Ô chữ Nhật điền từ)</span>
+                    <p class="paragraph-text">Vị trí (1): <input type="text" class="blank-input-box" id="ex32_1-input" placeholder="Nhập từ cần điền..."> <button class="btn-blank-check" onclick="handleBlankChecking('ex32_1', 'no')">Check</button></p>
+                    <div class="explanation-panel" id="ex32_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> no</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> Cụm colocation thông dụng "little or no knowledge" (có rất ít hoặc hầu như không có một chút kiến thức nào).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q32_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">Vị trí (2):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q32_2', 'B', this)">A. Salespeople</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q32_2', 'B', this)">B. Shoppers</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q32_2', 'B', this)">C. Producers</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q32_2', 'B', this)">D. Retailers</div>
+                    </div>
+                    <div class="explanation-panel" id="q32_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "Shoppers" (người mua hàng) tự nghiên cứu thông tin dựa vào các mệnh đề bổ nghĩa xung quanh bài viết.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q32_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">Vị trí (3):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q32_3', 'D', this)">A. say</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q32_3', 'D', this)">B. sell</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q32_3', 'D', this)">C. make</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q32_3', 'D', this)">D. decide</div>
+                    </div>
+                    <div class="explanation-panel" id="q32_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "have more power to decide what they want to buy" (có nhiều quyền năng quyết định thứ họ muốn mua).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q32_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">Vị trí (4):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q32_4', 'C', this)">A. personal</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q32_4', 'C', this)">B. tiny</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q32_4', 'C', this)">C. social</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q32_4', 'C', this)">D. natural</div>
+                    </div>
+                    <div class="explanation-panel" id="q32_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "social force" (lực lượng xã hội/hiện tượng đám đông truyền miệng thúc đẩy mua sắm sản phẩm).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q32_5-card">
+                    <span class="badge-number">Câu hỏi 5</span>
+                    <p class="paragraph-text">Vị trí (5):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q32_5', 'B', this)">A. lots of</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q32_5', 'B', this)">B. millions</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q32_5', 'B', this)">C. an amount</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q32_5', 'B', this)">D. many</div>
+                    </div>
+                    <div class="explanation-panel" id="q32_5-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Cấu trúc định lượng số nhiều: "with millions of people" (với hàng triệu người khắp hành tinh).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-6" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🏍️ Roads and Bike Cultures in Viet Nam</h2>
+                <div class="section-box" id="ex33-passage-box">
+                    <h3>Reading Passage</h3>
+                    <p class="paragraph-text">In the old days, Vietnamese roads were seen with (1) _____________ trucks. Now they are full of a variety of vehicles. The Vietnamese carry a huge load of a variety of goods up to over one hundred kilograms, especially during the war.<br><br>Time has gone by and (2) _____________ bikes are visible on the street. In big cities, many people think that bicycles belong to the inferior classes and seem (3) _____________. That is why people often find it hard psychologically and physically to park their bikes when going to a modern cafe or shopping mall.<br><br>Motorbikes are the main mode of (4) _____________ in Viet Nam, with 24 million of them in a country of 87 million people in 2009, one of the highest ratios in the world. More motorcycles of all brands have dominated the road. The mobility which motorbikes provide is crucial to workers in big cities. Some youths try to (5) _____________ expensive motorbikes from famous brands.</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex33-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex33-trans">Ngày xưa đường phố đầy những xe đạp thô sơ bên cạnh xe tải. Thời gian trôi đi, số lượng xe đạp xuất hiện thưa thớt hơn hẳn. Ở các đô thị lớn, người ta mang định kiến rằng xe đạp thuộc về tầng lớp thấp hơn và trông lỗi thời.</div>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q33_1-card">
+                    <span class="badge-number">Câu hỏi 1</span>
+                    <p class="paragraph-text">Vị trí (1):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q33_1', 'B', this)">A. planes</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q33_1', 'B', this)">B. bicycles</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q33_1', 'B', this)">C. trains</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q33_1', 'B', this)">D. ships</div>
+                    </div>
+                    <div class="explanation-panel" id="q33_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Kết nối logic với ngữ cảnh nói về xe đạp "bicycles" ở các câu tiếp theo của bài.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q33_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">Vị trí (2):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q33_2', 'D', this)">A. lots</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q33_2', 'D', this)">B. a lot of</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q33_2', 'D', this)">C. a few</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q33_2', 'D', this)">D. fewer</div>
+                    </div>
+                    <div class="explanation-panel" id="q33_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "fewer bikes are visible" (ngày càng ít xe đạp xuất hiện thấy được trên đường phố).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q33_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">Vị trí (3):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q33_3', 'A', this)">A. unfashionable</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q33_3', 'A', this)">B. fashionable</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q33_3', 'A', this)">C. modern</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q33_3', 'A', this)">D. comfortable</div>
+                    </div>
+                    <div class="explanation-panel" id="q33_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "seem unfashionable" (trông lỗi thời, không sành điệu, không hợp mốt).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q33_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">Vị trí (4):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q33_4', 'B', this)">A. convey</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q33_4', 'B', this)">B. transport</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q33_4', 'B', this)">C. deliver</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q33_4', 'B', this)">D. traffic</div>
+                    </div>
+                    <div class="explanation-panel" id="q33_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> Cụm danh từ cố định thông dụng: "mode of transport" (phương thức vận tải/vận chuyển).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q33_5-card">
+                    <span class="badge-number">Câu hỏi 5</span>
+                    <p class="paragraph-text">Vị trí (5):</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q33_5', 'C', this)">A. show up</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q33_5', 'C', this)">B. show round</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q33_5', 'C', this)">C. show off</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q33_5', 'C', this)">D. show through</div>
+                    </div>
+                    <div class="explanation-panel" id="q33_5-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> Cụm động từ "show off" có nghĩa là khoe khoang, trưng diện xe máy xịn của giới trẻ.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-7" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">👑 Motorbikes: Kings of the Road in Vietnam</h2>
+                <div class="section-box" id="ex41-passage-box">
+                    <h3>Reading Passage</h3>
+                    <p class="paragraph-text">Motorbikes are the undisputed kings of the road in Vietnam. Millions zoom through the streets, carrying everything from passengers to entire families and deliveries. The convenience and affordability of motorbikes have made them the primary mode of transportation for most Vietnamese people.<br><br>Owning a motorbike is a rite of passage for many young adults, and learning to ride is a crucial skill. The dense traffic can be intimidating for newcomers, but Vietnamese riders navigate the streets with a practiced ease, weaving between cars and pedestrians in a seemingly chaotic yet organized dance.<br><br>While motorbikes offer freedom and flexibility, concerns are rising about traffic congestion and pollution. The government is exploring solutions like promoting public transportation and electric vehicles. However, for many Vietnamese, the motorbike remains a symbol of independence and a cornerstone of their daily lives.</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex41-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex41-trans">Xe máy là ông vua không thể bàn cãi trên đường phố Việt Nam. Tiện ích cơ động và giá thành rẻ giúp xe máy trở thành phương tiện xương sống chính yếu phục vụ đời sống nhân dân.</div>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q41_1-card">
+                    <span class="badge-number">Câu hỏi 1</span>
+                    <p class="paragraph-text">1. What is the most common mode of transportation in Vietnam?</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q41_1', 'C', this)">A. Cars</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q41_1', 'C', this)">B. Buses</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q41_1', 'C', this)">C. Motorbikes</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q41_1', 'C', this)">D. Trains</div>
+                    </div>
+                    <div class="explanation-panel" id="q41_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "Motorbikes are the undisputed kings of the road in Vietnam."</p>
+                        <p><strong>3. TỪ ĐỒNG NGHĨA:</strong> <mark>undisputed kings of the road</mark> = <mark>most common mode of transportation</mark></p>
+                        <button class="btn-locate-evidence" onclick="locatePassageElement('ex41-passage-box')">📍 Vị trí dẫn chứng</button>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q41_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">2. Why are motorbikes so popular in Vietnam?</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q41_2', 'D', this)">A. They are a status symbol for the wealthy.</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q41_2', 'D', this)">B. Gas prices are very low.</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q41_2', 'D', this)">C. Traffic laws are not strictly enforced for motorbikes.</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q41_2', 'D', this)">D. They are convenient, affordable, and can navigate narrow streets.</div>
+                    </div>
+                    <div class="explanation-panel" id="q41_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "The convenience and affordability of motorbikes have made them..."</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q41_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">3. What is a challenge for new motorbike riders in Vietnam?</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q41_3', 'A', this)">A. The dense traffic</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q41_3', 'A', this)">B. The high cost of motorbike insurance</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q41_3', 'A', this)">C. Finding a parking space after riding</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q41_3', 'A', this)">D. Learning the different hand signals used</div>
+                    </div>
+                    <div class="explanation-panel" id="q41_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "The dense traffic can be intimidating for newcomers..."</p>
+                        <p><strong>3. TỪ ĐỒNG NGHĨA:</strong> <mark>intimidating</mark> = <mark>challenge</mark></p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q41_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">4. How do experienced Vietnamese riders navigate the busy streets?</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q41_4', 'D', this)">A. By memorizing all the one-way streets</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q41_4', 'D', this)">B. By using only major highways</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q41_4', 'D', this)">C. By always staying in the far-right lane</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q41_4', 'D', this)">D. By weaving skillfully between other vehicles while maintaining awareness.</div>
+                    </div>
+                    <div class="explanation-panel" id="q41_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "...weaving between cars and pedestrians in a seemingly chaotic yet organized dance."</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q41_5-card">
+                    <span class="badge-number">Câu hỏi 5</span>
+                    <p class="paragraph-text">5. What is a growing concern related to motorbikes?</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q41_5', 'B', this)">A. The increasing number of accidents</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q41_5', 'B', this)">B. Traffic congestion and pollution</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q41_5', 'B', this)">C. The difficulty of finding spare parts</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q41_5', 'B', this)">D. The lack of comfortable helmets</div>
+                    </div>
+                    <div class="explanation-panel" id="q41_5-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "...concerns are rising about traffic congestion and pollution."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-8" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🌾 Life on the Iowa Frontier</h2>
+                <div class="section-box" id="ex42-passage-box">
+                    <h3>Reading Passage</h3>
+                    <p class="paragraph-text">Back in the 19th century, on the Iowa frontier, most homes had to produce nearly all their own needs. They lived on farms that raised much of their own food, and children became an important part of the family team. They learned to contribute to the family’s survival at an early age. They gathered eggs, worked in the garden, carried in wood and water and perhaps cared for younger brothers and sisters. As girls got older, they learned to cook, sew, preserve food for the winter, do the washing and care for the sick. Boys helped their father with the livestock, planting and harvest, hunting, and maintenance of buildings and fences. Their opportunities for education were limited to whatever a nearby school offered. When there were heavy demands for their help on the farm, like during corn picking, older boys had to stay at home to help.<br><br>However, life for Iowan children has changed a lot. It has become much easier in many ways. And with the invention of computers, the internet and cell phones, children have greater opportunities to connect with friends and the outside world.</p>
+                    <button class="btn-translate-toggle" onclick="toggleTranslationBox('ex42-trans')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+                    <div class="vietnamese-translation" id="ex42-trans">Vào thế kỷ 19 tại vùng biên thùy Iowa, hầu hết các gia đình phải tự cung tự cấp. Trẻ em đóng góp vai trò sinh tồn từ sớm như nhặt trứng, gánh nước. Con trai giúp bố săn bắn thu hoạch mùa màng còn việc học hành bị hạn chế lớn do mùa vụ ngô bận rộn.</div>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q42_1-card">
+                    <span class="badge-number">Câu hỏi 1</span>
+                    <p class="paragraph-text">1. In the 19th century, most Iowan families on the frontier ____________.</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q42_1', 'B', this)">A. did business</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q42_1', 'B', this)">B. produced their own food</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q42_1', 'B', this)">C. had few children</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q42_1', 'B', this)">D. took good care of their children</div>
+                    </div>
+                    <div class="explanation-panel" id="q42_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "They lived on farms that raised much of their own food..."</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q42_2-card">
+                    <span class="badge-number">Câu hỏi 2</span>
+                    <p class="paragraph-text">2. Iowan girls learned to ____________.</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q42_2', 'A', this)">A. preserve food</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q42_2', 'A', this)">B. hunt</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q42_2', 'A', this)">C. knit gloves</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q42_2', 'A', this)">D. maintain buildings</div>
+                    </div>
+                    <div class="explanation-panel" id="q42_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "As girls got older, they learned to cook, sew, preserve food for the winter..."</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q42_3-card">
+                    <span class="badge-number">Câu hỏi 3</span>
+                    <p class="paragraph-text">3. Iowan children had ____________ opportunities for education.</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q42_3', 'B', this)">A. good</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q42_3', 'B', this)">B. few</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q42_3', 'B', this)">C. no</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q42_3', 'B', this)">D. a lot of</div>
+                    </div>
+                    <div class="explanation-panel" id="q42_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "Their opportunities for education were limited to whatever a nearby school offered."</p>
+                        <p><strong>3. ĐỒNG NGHĨA:</strong> <mark>limited</mark> = <mark>few</mark></p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q42_4-card">
+                    <span class="badge-number">Câu hỏi 4</span>
+                    <p class="paragraph-text">4. Older boys ____________.</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q42_4', 'C', this)">A. did not go to school</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q42_4', 'C', this)">B. had fewer opportunities to go to school than girls</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q42_4', 'C', this)">C. had to stop school from time to time to help with harvesting</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q42_4', 'C', this)">D. did not like going to school</div>
+                    </div>
+                    <div class="explanation-panel" id="q42_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "When there were heavy demands for their help on the farm, like during corn picking, older boys had to stay at home to help."</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q42_5-card">
+                    <span class="badge-number">Câu hỏi 5</span>
+                    <p class="paragraph-text">5. Life for Iowan children has become much ____________ now.</p>
+                    <div class="options-container">
+                        <div class="option-node" data-val="A" onclick="handleMCQSelection('q42_5', 'C', this)">A. demanding</div>
+                        <div class="option-node" data-val="B" onclick="handleMCQSelection('q42_5', 'C', this)">B. complicated</div>
+                        <div class="option-node" data-val="C" onclick="handleMCQSelection('q42_5', 'C', this)">C. convenient</div>
+                        <div class="option-node" data-val="D" onclick="handleMCQSelection('q42_5', 'C', this)">D. fun</div>
+                    </div>
+                    <div class="explanation-panel" id="q42_5-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "It has become much easier in many ways... connect with friends..."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-9" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🧺 The Saigon Street Food Shoulder Pole</h2>
+                <div class="section-box" id="ex43-passage-box">
+                    <h3>Reading Passage</h3>
+                    <p class="paragraph-text">The street food shoulder pole has been familiar to Saigon people for many years. Nowadays, it has become a special thing that makes travelers curious. In small areas of District 1 and District 3, we could count more than 100 vendors who earned money using shoulder poles. A shoulder pole, also called a carrying pole, is a yoke of wood or bamboo, used by people to carry a load. The vendors put their goods in two baskets at each end of the yoke.<br><br>In downtown, we can meet young women with their shoulder poles. The baskets are covered with plastic wrap carefully to protect the foods from street dust. In a tight space of one basket, she could mix the ingredients and bake the cake on a small charcoal, which was defended by a carton. The ready cakes were put in another basket.<br><br>In the morning or evening, on a rainy or sunny day, Saigon streets are marked by shoulder poles of people from different regions of the country, which has become a unique part of Saigon. It has been said that it isn't hard to live in Saigon if you work hard. With a carrying pole on their shoulders, the vendors have turned it into a "store." The reason is very simple, they don't have enough money to open a real store. Every day, these women continue their journey through Saigon streets under the sun and rain, selling cheap things or street foods to earn money and feed their children.</p>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q43_1-card">
+                    <span class="badge-number">Câu hỏi 1 (Dạng cuộn)</span>
+                    <p class="paragraph-text">1. A shoulder pole _____________.</p>
+                    <select class="gamified-dropdown" id="q43_1-select" onchange="handleSelectChecking('q43_1', 'C')">
+                        <option value="">-- Click chọn đáp án dạng cuộn --</option>
+                        <option value="A">A. is the connection between wood and bamboo</option>
+                        <option value="B">B. used to be called a carrying pole</option>
+                        <option value="C">C. is a bar made of wood or bamboo</option>
+                        <option value="D">D. is used to put goods on street vendors' shoulders</option>
+                    </select>
+                    <div class="explanation-panel" id="q43_1-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> C</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "A shoulder pole, also called a carrying pole, is a yoke of wood or bamboo..."</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q43_2-card">
+                    <span class="badge-number">Câu hỏi 2 (Dạng cuộn)</span>
+                    <p class="paragraph-text">2. The street food shoulder pole is _____________.</p>
+                    <select class="gamified-dropdown" id="q43_2-select" onchange="handleSelectChecking('q43_2', 'A')">
+                        <option value="">-- Click chọn đáp án dạng cuộn --</option>
+                        <option value="A">A. used by street vendors to carry things</option>
+                        <option value="B">B. a characteristic of Districts 1 and 3</option>
+                        <option value="C">C. used to make foreign travelers curious</option>
+                        <option value="D">D. a way for passersby to have food</option>
+                    </select>
+                    <div class="explanation-panel" id="q43_2-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. DẪN CHỨNG:</strong> "...used by people to carry a load."</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q43_3-card">
+                    <span class="badge-number">Câu hỏi 3 (Dạng cuộn)</span>
+                    <p class="paragraph-text">3. All of the following are true about shoulder poles EXCEPT that ______________.</p>
+                    <select class="gamified-dropdown" id="q43_3-select" onchange="handleSelectChecking('q43_3', 'B')">
+                        <option value="">-- Click chọn đáp án dạng cuộn --</option>
+                        <option value="A">A. street vendors can bake cakes there</option>
+                        <option value="B">B. the two baskets have the same function</option>
+                        <option value="C">C. they can contain enough things to serve some customers</option>
+                        <option value="D">D. they can be protected from dust</option>
+                    </select>
+                    <div class="explanation-panel" id="q43_3-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> B</p>
+                        <p><strong>2. GIẢI THÍCH CHI TIẾT:</strong> Hai đầu thúng có chức năng khác biệt nhau rõ rệt (Một đầu nhào trộn nướng bánh, một đầu chứa bánh thành phẩm đã chín).</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q43_4-card">
+                    <span class="badge-number">Câu hỏi 4 (Dạng cuộn)</span>
+                    <p class="paragraph-text">4. All the following are benefits of shoulder poles EXCEPT that _____________.</p>
+                    <select class="gamified-dropdown" id="q43_4-select" onchange="handleSelectChecking('q43_4', 'D')">
+                        <option value="">-- Click chọn đáp án dạng cuộn --</option>
+                        <option value="A">A. they can help street vendors sell many things without a store</option>
+                        <option value="B">B. street vendors can support their families with the help of shoulder poles</option>
+                        <option value="C">C. it is a way for street vendors to carry goods around the streets</option>
+                        <option value="D">D. women are marked by unique shoulder poles from different regions</option>
+                    </select>
+                    <div class="explanation-panel" id="q43_4-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> D</p>
+                        <p><strong>2. GIẢI THÍCH CHI TI TIẾT:</strong> Ý D chỉ là câu trích dẫn mang tính miêu tả quang cảnh, không biểu lộ lợi ích của đòn gánh.</p>
+                    </div>
+                </div>
+
+                <div class="exercise-card" id="q43_5-card">
+                    <span class="badge-number">Câu hỏi 5 (Dạng cuộn)</span>
+                    <p class="paragraph-text">5. The word "yoke" in paragraph 1 is closest in meaning to _____________.</p>
+                    <select class="gamified-dropdown" id="q43_5-select" onchange="handleSelectChecking('q43_5', 'A')">
+                        <option value="">-- Click chọn đáp án dạng cuộn --</option>
+                        <option value="A">A. a piece of wood that is shaped to fit across a person's shoulders to carry two equal loads</option>
+                        <option value="B">B. a wooden bar that is connected to the vehicles or loads so that they can be pulled away</option>
+                        <option value="C">C. something that connects two things or people, usually in a way that limits freedom</option>
+                        <option value="D">D. a long piece of wood that is fastened across the neck to pull heavy loads</option>
+                    </select>
+                    <div class="explanation-panel" id="q43_5-explain">
+                        <p><strong>1. ĐÁP ÁN:</strong> A</p>
+                        <p><strong>2. GIẢI THÍCH:</strong> "yoke" tương thích hoàn toàn với đòn gánh gỗ/tre đặt thăng bằng vắt qua vai người mang hàng rong.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-10" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🌐 Online Shopping Rise in Vietnam</h2>
+                <div class="section-box" id="ex51-passage-box">
+                    <h3>Reading Fragment</h3>
+                    <p class="paragraph-text">Vietnam has seen a dramatic rise in online shopping in recent years. Fueled by a growing internet population and (1) ____________. Popular websites offer a wide variety of products, from clothing and electronics to groceries and household goods.<br><br>(2) ____________ is a major draw for Vietnamese consumers. Many people enjoy being able to browse and purchase items from the comfort of their own homes. Online shopping also offers competitive prices and frequent discounts, making it an attractive alternative to traditional brick-and-mortar stores.<br><br>(3) ____________. Cash on delivery remains the preferred payment method for many customers, who are wary of online transactions. Additionally, concerns exist about product quality and the potential for counterfeit goods. Delivery times can also vary depending on location, (4) ____________.</p>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q51_1-card">
+                    <span class="badge-number">Khoảng trống (1)</span>
+                    <select class="gamified-dropdown" id="q51_1-select" onchange="handleSelectChecking('q51_1', 'D')">
+                        <option value="">-- Chọn đáp án điền vào đoạn văn --</option>
+                        <option value="A">A. The convenience of online shopping</option>
+                        <option value="B">B. and rural areas may have limited access to reliable delivery services</option>
+                        <option value="C">C. Despite its popularity, online shopping in Vietnam still faces some challenges</option>
+                        <option value="D">D. increasing smartphone use, e-commerce platforms are booming</option>
+                    </select>
+                    <div class="explanation-panel" id="q51_1-explain"><p><strong>ĐÁP ÁN:</strong> D (Cấu trúc song hành lý do phát triển mua sắm)</p></div>
+                </div>
+
+                <div class="exercise-card" id="q51_2-card">
+                    <span class="badge-number">Khoảng trống (2)</span>
+                    <select class="gamified-dropdown" id="q51_2-select" onchange="handleSelectChecking('q51_2', 'A')">
+                        <option value="">-- Chọn đáp án điền vào đoạn văn --</option>
+                        <option value="A">A. The convenience of online shopping</option>
+                        <option value="B">B. and rural areas may have limited access to reliable delivery services</option>
+                        <option value="C">C. Despite its popularity, online shopping in Vietnam still faces some challenges</option>
+                        <option value="D">D. increasing smartphone use, e-commerce platforms are booming</option>
+                    </select>
+                    <div class="explanation-panel" id="q51_2-explain"><p><strong>ĐÁP ÁN:</strong> A (Câu sau bổ trợ ý nghĩa cho sự tiện lợi thoải mái tại nhà)</p></div>
+                </div>
+
+                <div class="exercise-card" id="q51_3-card">
+                    <span class="badge-number">Khoảng trống (3)</span>
+                    <select class="gamified-dropdown" id="q51_3-select" onchange="handleSelectChecking('q51_3', 'C')">
+                        <option value="">-- Chọn đáp án điền vào đoạn văn --</option>
+                        <option value="A">A. The convenience of online shopping</option>
+                        <option value="B">B. and rural areas may have limited access to reliable delivery services</option>
+                        <option value="C">C. Despite its popularity, online shopping in Vietnam still faces some challenges</option>
+                        <option value="D">D. increasing smartphone use, e-commerce platforms are booming</option>
+                    </select>
+                    <div class="explanation-panel" id="q51_3-explain"><p><strong>ĐÁP ÁN:</strong> C (Chuyển ý sang liệt kê các thách thức như hàng giả, lừa đảo)</p></div>
+                </div>
+
+                <div class="exercise-card" id="q51_4-card">
+                    <span class="badge-number">Khoảng trống (4)</span>
+                    <select class="gamified-dropdown" id="q51_4-select" onchange="handleSelectChecking('q51_4', 'B')">
+                        <option value="">-- Chọn đáp án điền vào đoạn văn --</option>
+                        <option value="A">A. The convenience of online shopping</option>
+                        <option value="B">B. and rural areas may have limited access to reliable delivery services</option>
+                        <option value="C">C. Despite its popularity, online shopping in Vietnam still faces some challenges</option>
+                        <option value="D">D. increasing smartphone use, e-commerce platforms are booming</option>
+                    </select>
+                    <div class="explanation-panel" id="q51_4-explain"><p><strong>ĐÁP ÁN:</strong> B (Bổ sung ý về hạn chế vận chuyển tại vùng nông thôn)</p></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-zone-11" class="exercise-view-block">
+            <div class="split-left">
+                <h2 class="passage-header">🎬 Modern Entertainment Advancement</h2>
+                <div class="section-box" id="ex52-passage-box">
+                    <h3>Reading Fragment</h3>
+                    <p class="paragraph-text">Entertainment nowadays (1) ____________. In the past, people relied on traditional forms of entertainment such as books, radio, and live performances. They would gather in theatres or at home to listen to radio dramas or watch plays. (2) ____________, but people had to go to theatres to watch them. Music was mainly enjoyed through vinyl records or live performances.<br><br>However, with the advancement of technology, entertainment has become much more accessible and diverse. (3) ____________. Streaming services like Netflix, YouTube, and Spotify offer unlimited access to movies, TV shows, music, and videos. Social media platforms like Instagram and TikTok provide endless entertainment through photos, videos, and short clips. Additionally, online gaming has become a major form of entertainment, (4) ____________.<br><br>In conclusion, entertainment nowadays is more convenient, customizable, and varied, catering to the diverse interests and preferences of people today.</p>
+                </div>
+            </div>
+            <div class="split-right">
+                <div class="exercise-card" id="q52_1-card">
+                    <span class="badge-number">Khoảng trống (1)</span>
+                    <select class="gamified-dropdown" id="q52_1-select" onchange="handleSelectChecking('q52_1', 'C')">
+                        <option value="">-- Chọn câu thích hợp dạng cuộn --</option>
+                        <option value="A">A. Movies were a popular form of entertainment</option>
+                        <option value="B">B. Nowadays, people can access a wide range of entertainment options right from their smartphones</option>
+                        <option value="C">C. is very different from entertainment in the past</option>
+                        <option value="D">D. allowing people to connect and play with others from around the world.</option>
+                    </select>
+                    <div class="explanation-panel" id="q52_1-explain"><p><strong>ĐÁP ÁN:</strong> C (Câu mở bài giới thiệu chủ đề đối lập giữa xưa và nay)</p></div>
+                </div>
+
+                <div class="exercise-card" id="q52_2-card">
+                    <span class="badge-number">Khoảng trống (2)</span>
+                    <select class="gamified-dropdown" id="q52_2-select" onchange="handleSelectChecking('q52_2', 'A')">
+                        <option value="">-- Chọn câu thích hợp dạng cuộn --</option>
+                        <option value="A">A. Movies were a popular form of entertainment</option>
+                        <option value="B">B. Nowadays, people can access a wide range of entertainment options right from their smartphones</option>
+                        <option value="C">C. is very different from entertainment in the past</option>
+                        <option value="D">D. allowing people to connect and play with others from around the world.</option>
+                    </select>
+                    <div class="explanation-panel" id="q52_2-explain"><p><strong>ĐÁP ÁN:</strong> A (Nối tiếp hợp lý với mệnh đề đi rạp chiếu phim ở vế sau)</p></div>
+                </div>
+
+                <div class="exercise-card" id="q52_3-card">
+                    <span class="badge-number">Khoảng trống (3)</span>
+                    <select class="gamified-dropdown" id="q52_3-select" onchange="handleSelectChecking('q52_3', 'B')">
+                        <option value="">-- Chọn câu thích hợp dạng cuộn --</option>
+                        <option value="A">A. Movies were a popular form of entertainment</option>
+                        <option value="B">B. Nowadays, people can access a wide range of entertainment options right from their smartphones</option>
+                        <option value="C">C. is very different from entertainment in the past</option>
+                        <option value="D">D. allowing people to connect and play with others from around the world.</option>
+                    </select>
+                    <div class="explanation-panel" id="q52_3-explain"><p><strong>ĐÁP ÁN:</strong> B (Làm rõ nghĩa cho luận điểm bùng nổ thiết bị công nghệ điện thoại thông minh)</p></div>
+                </div>
+
+                <div class="exercise-card" id="q52_4-card">
+                    <span class="badge-number">Khoảng trống (4)</span>
+                    <select class="gamified-dropdown" id="q52_4-select" onchange="handleSelectChecking('q52_4', 'D')">
+                        <option value="">-- Chọn câu thích hợp dạng cuộn --</option>
+                        <option value="A">A. Movies were a popular form of entertainment</option>
+                        <option value="B">B. Nowadays, people can access a wide range of entertainment options right from their smartphones</option>
+                        <option value="C">C. is very different from entertainment in the past</option>
+                        <option value="D">D. allowing people to connect and play with others from around the world.</option>
+                    </select>
+                    <div class="explanation-panel" id="q52_4-explain"><p><strong>ĐÁP ÁN:</strong> D (Làm rõ công năng kết nối kết bạn toàn cầu của trò chơi trực tuyến)</p></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="sticky-footer">
+        <button class="btn-global-submit" onclick="showDashboardResultsSummary()">NỘP BÀI THI KẾT QUẢ 🚀</button>
+    </div>
+
+    <div id="dashboard-modal">
+        <div class="modal-body">
+            <h2 style="font-size: 26px; color: var(--primary);">🏆 KẾT QUẢ INTERACTIVE MOCK TEST 🏆</h2>
+            <div class="score-badge" id="modal-score-view">0/32</div>
+            <h3 id="modal-feedback-title" style="margin-bottom: 12px; color: #E67E22; font-size: 22px;">Làm tốt lắm!</h3>
+            <p id="modal-feedback-desc" style="color: #555; font-size: 15px; line-height: 1.6;">Hãy rà soát kỹ lỗi sai thông qua dải biểu tượng bài tập phía trên nhé!</p>
+            <button class="btn-close-dashboard" onclick="closeDashboard()">Quay lại xem lỗi sai</button>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function triggerSoundEffect(isCorrect) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (isCorrect) {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+            } else {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(80, audioCtx.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            }
+        }
+
+        const canvas = document.getElementById('confetti-layer');
+        const ctx = canvas.getContext('2d');
+        let confettiPieces = [], runningConfetti = false;
+
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+        function emitConfettiShower() {
+            runningConfetti = true; confettiPieces = [];
+            for (let i = 0; i < 100; i++) {
+                confettiPieces.push({
+                    x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 4, d: Math.random() * canvas.height,
+                    color: `hsl(${Math.random() * 360}, 90%, 65%)`, tilt: Math.random() * 8 - 4,
+                    tiltAngleIncremental: Math.random() * 0.06 + 0.02, tiltAngle: 0
+                });
+            }
+            animateConfettiFrame();
+            setTimeout(() => { runningConfetti = false; }, 3500);
+        }
+
+        function animateConfettiFrame() {
+            if (!runningConfetti && confettiPieces.length === 0) { ctx.clearRect(0,0,canvas.width,canvas.height); return; }
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            confettiPieces.forEach((p, idx) => {
+                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3.5 + p.r/2)/2; p.x += Math.sin(p.tiltAngle);
+                ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r/2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r/2); ctx.stroke();
+                if (p.y > canvas.height) {
+                    if (runningConfetti) { confettiPieces[idx] = { x: Math.random() * canvas.width, y: -20, r: p.r, d: p.d, color: p.color, tilt: p.tilt, tiltAngleIncremental: p.tiltAngleIncremental, tiltAngle: p.tiltAngle }; }
+                    else { confettiPieces.splice(idx, 1); }
+                }
+            });
+            requestAnimationFrame(animateConfettiFrame);
+        }
+
+        let totalTimeSeconds = 25 * 60, clockRunning = false, countdownIntervalId = null;
+        function triggerClockSystem() {
+            const btn = document.getElementById('timer-toggle-btn');
+            if (clockRunning) {
+                clearInterval(countdownIntervalId); clockRunning = false;
+                btn.innerText = "TIẾP TỤC LÀM BÀI"; btn.style.background = "var(--secondary)";
+            } else {
+                clockRunning = true; btn.innerText = "TẠM DỪNG"; btn.style.background = "#FF7675";
+                countdownIntervalId = setInterval(() => {
+                    if (totalTimeSeconds > 0) {
+                        totalTimeSeconds--;
+                        let mins = Math.floor(totalTimeSeconds / 60), secs = totalTimeSeconds % 60;
+                        document.getElementById('clock-view').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    } else {
+                        clearInterval(countdownIntervalId);
+                        alert("Đã hết giờ làm bài. Bạn vẫn có thể tiếp tục làm, nhưng nhớ là trong phòng thi thật, bạn chỉ nên làm một bài như thế này trong 20-25 phút thôi nha.");
+                    }
+                }, 1000);
+            }
+        }
+
+        function activateSection(index) {
+            document.querySelectorAll('.exercise-view-block').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-icon-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`section-zone-${index}`).classList.add('active');
+            document.querySelectorAll('.nav-icon-btn')[index - 1].classList.add('active');
+        }
+
+        document.querySelectorAll('.split-left').forEach(panel => {
+            panel.addEventListener('mouseup', function() {
+                const selection = window.getSelection();
+                if (!selection.isCollapsed && selection.toString().trim().length > 0) {
+                    const textRange = selection.getRangeAt(0);
+                    const wrapperSpan = document.createElement('span');
+                    wrapperSpan.className = 'highlight-pastel';
+                    try { textRange.surroundContents(wrapperSpan); } catch (err) {}
+                    selection.removeAllRanges();
+                }
+            });
+        });
+
+        function toggleTranslationBox(boxId) {
+            const node = document.getElementById(boxId);
+            node.style.display = (node.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function locatePassageElement(id) {
+            const item = document.getElementById(id);
+            if (item) {
+                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                item.style.backgroundColor = '#FFF2CC';
+                setTimeout(() => { item.style.backgroundColor = '#FFF'; }, 1500);
+            }
+        }
+
+        const databaseRecord = {};
+        const officialKeys = {
+            'q21_1': 'A', 'q21_2': 'B', 'q21_3': 'D', 'q21_4': 'A',
+            'q22_1': 'C', 'q22_2': 'A', 'q22_3': 'B', 'q22_4': 'C',
+            'q23_1': 'A', 'q23_2': 'B', 'q23_3': 'A', 'q23_4': 'D',
+            'q31_1': 'A', 'q31_2': 'B', 'q31_3': 'C', 'q31_4': 'C', 'q31_5': 'D',
+            'ex32_1': 'no', 'q32_2': 'B', 'q32_3': 'D', 'q32_4': 'C', 'q32_5': 'B',
+            'q33_1': 'B', 'q33_2': 'D', 'q33_3': 'A', 'q33_4': 'B', 'q33_5': 'C',
+            'q41_1': 'C', 'q41_2': 'D', 'q41_3': 'A', 'q41_4': 'D', 'q41_5': 'B',
+            'q42_1': 'B', 'q42_2': 'A', 'q42_3': 'B', 'q42_4': 'C', 'q42_5': 'C',
+            'q43_1': 'C', 'q43_2': 'A', 'q43_3': 'B', 'q43_4': 'D', 'q43_5': 'A',
+            'q51_1': 'D', 'q51_2': 'A', 'q51_3': 'C', 'q51_4': 'B',
+            'q52_1': 'C', 'q52_2': 'A', 'q52_3': 'B', 'q52_4': 'D'
+        };
+
+        function refreshMasterProgressBar() {
+            let count = Object.keys(databaseRecord).length;
+            document.getElementById('master-progress-fill').style.width = `${(count / 42) * 100}%`;
+        }
+
+        function handleMCQSelection(qId, correctOption, node) {
+            if (databaseRecord[qId] !== undefined) return;
+            const container = node.parentElement;
+            const card = document.getElementById(`${qId}-card`);
+            if (correctOption === officialKeys[qId]) {
+                triggerSoundEffect(true); node.classList.add('correct'); databaseRecord[qId] = true;
+            } else {
+                triggerSoundEffect(false); card.classList.add('shake-animation');
+                setTimeout(() => card.classList.remove('shake-animation'), 500);
+                node.classList.add('incorrect');
+                const correctNode = container.querySelector(`[data-val="${officialKeys[qId]}"]`);
+                if (correctNode) correctNode.classList.add('correct');
+                databaseRecord[qId] = false;
+            }
+            document.getElementById(`${qId}-explain`).style.display = 'block';
+            refreshMasterProgressBar();
+        }
+
+        function handleBlankChecking(qId, word) {
+            const input = document.getElementById(`${qId}-input`);
+            if (input.value.trim().toLowerCase() === word.toLowerCase()) {
+                triggerSoundEffect(true); input.style.backgroundColor = '#E8F5E9'; databaseRecord[qId] = true;
+            } else {
+                triggerSoundEffect(false); input.style.backgroundColor = '#FFEBEE'; databaseRecord[qId] = false;
+            }
+            document.getElementById(`${qId}-explain`).style.display = 'block';
+            refreshMasterProgressBar();
+        }
+
+        function handleSelectChecking(qId, ans) {
+            const sel = document.getElementById(`${qId}-select`);
+            if (sel.value === ans) {
+                triggerSoundEffect(true); sel.style.borderColor = 'var(--bg-correct)'; databaseRecord[qId] = true;
+            } else {
+                triggerSoundEffect(false); sel.style.borderColor = 'var(--bg-wrong)'; databaseRecord[qId] = false;
+            }
+            document.getElementById(`${qId}-explain`).style.display = 'block';
+            refreshMasterProgressBar();
+        }
+
+        function showDashboardResultsSummary() {
+            let score = 0, total = 42;
+            for (let k in databaseRecord) { if (databaseRecord[k] === true) score++; }
+            document.getElementById('modal-score-view').innerText = `${score}/${total}`;
+            const title = document.getElementById('modal-feedback-title');
+            if (score >= 35) { title.innerText = "🥇 THIÊN TÀI READING IELTS 9.0! 🥇"; emitConfettiShower(); }
+            else if (score >= 22) { title.innerText = "🌟 LÀM TỐT LẮM! 🌟"; }
+            else { title.innerText = "💪 CỐ LÊN NHÉ BẠN ƠI! 💪"; }
+            document.getElementById('dashboard-modal').style.display = 'flex';
+        }
+
+        function closeDashboard() { document.getElementById('dashboard-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>
